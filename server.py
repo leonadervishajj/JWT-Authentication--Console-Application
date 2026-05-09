@@ -1,5 +1,6 @@
 import socket
 import threading
+from xmlrpc import server
 import jwt
 import json
 from datetime import datetime, timedelta, timezone
@@ -133,3 +134,11 @@ def main():
     print(f"Port: {PORT}")
     print("Duke pritur per lidhje...")
     print("=" * 60)
+    
+    while True:
+        client_socket, address = server.accept()
+        thread = threading.Thread(target=handle_client, args=(client_socket, address))
+        thread.start()
+
+if __name__ == "__main__":
+    main()
