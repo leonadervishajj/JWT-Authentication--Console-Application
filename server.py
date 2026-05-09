@@ -128,8 +128,8 @@ def main():
     server.listen(5)
     
     print("=" * 60)
-    print("🤖 SERVERI JWT PO PUNON")
-    print(f"📍 Host: {HOST}")
-    print(f"🔌 Port: {PORT}")
-    print("⏳ Duke pritur për lidhje...")
+    print("SERVERI JWT PO PUNON")
+    print(f"Host: {HOST}")
+    print(f"Port: {PORT}")
+    print("Duke pritur per lidhje...")
     print("=" * 60)
