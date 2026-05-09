@@ -42,3 +42,81 @@ def verify_jwt(token):
         return payload
     except:
         return None
+    
+def handle_client(client_socket, address):
+    print(f"[LIDHJE] {address} u lidh")
+    
+    while True:
+        try:
+            data = client_socket.recv(4096).decode('utf-8')
+            if not data:
+                break
+            
+            request = json.loads(data)
+            action = request.get("action")
+            
+           
+            if action == "login":
+                username = request.get("username")
+                password = request.get("password")
+                
+                print(f"[AUTH] Përpjekje për login nga {username}")
+                
+                if username in USERS and USERS[username] == password:
+                    token = generate_jwt(username)
+                    response = {
+                        "status": "ok",
+                        "message": "Autentikimi u krye me sukses",
+                        "token": token
+                    }
+                    print(f"[SUKSES] {username} u autentikua")
+                else:
+                    response = {
+                        "status": "error",
+                        "message": "Username ose password i gabuar"
+                    }
+                    print(f"[DËSHTIM] {username} deshti")
+                
+                client_socket.send(json.dumps(response).encode('utf-8'))
+            
+       
+            elif action == "get_data":
+                token = request.get("token")
+                
+                if not token:
+                    response = {
+                        "status": "error",
+                        "message": "Nuk jeni të autentikuar. Ju lutem logohuni fillimisht."
+                    }
+                else:
+                    payload = verify_jwt(token)
+                    if payload:
+                        response = {
+                            "status": "ok",
+                            "data": {
+                                "message": "Këto janë të dhënat e mbrojtura!",
+                                "secret": "Kodi sekret është: 12345",
+                                "timestamp": datetime.now().isoformat(),
+                                "user": payload.get("username")
+                            }
+                        }
+                        print(f"[AKSES] {payload.get('username')} mori të dhënat e mbrojtura")
+                    else:
+                        response = {
+                            "status": "error",
+                            "message": "Token i skaduar ose i pavlefshëm. Ju lutem logohuni përsëri."
+                        }
+                        print(f"[REFUZIM] Tentim aksesi me token të pavlefshëm")
+                
+                client_socket.send(json.dumps(response).encode('utf-8'))
+            
+            else:
+                response = {"status": "error", "message": "Komandë e panjohur"}
+                client_socket.send(json.dumps(response).encode('utf-8'))
+                
+        except Exception as e:
+            print(f"[GABIM] {e}")
+            break
+    
+    client_socket.close()
+    print(f"[SHKËPUTJE] {address} u shkëput")
