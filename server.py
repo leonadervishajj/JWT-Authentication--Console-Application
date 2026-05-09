@@ -120,3 +120,16 @@ def handle_client(client_socket, address):
     
     client_socket.close()
     print(f"[SHKËPUTJE] {address} u shkëput")
+    
+def main():
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    server.bind((HOST, PORT))
+    server.listen(5)
+    
+    print("=" * 60)
+    print("🤖 SERVERI JWT PO PUNON")
+    print(f"📍 Host: {HOST}")
+    print(f"🔌 Port: {PORT}")
+    print("⏳ Duke pritur për lidhje...")
+    print("=" * 60)
