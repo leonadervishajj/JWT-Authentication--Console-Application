@@ -1,4 +1,5 @@
 import socket
+import bcrypt
 import threading
 from xmlrpc import server
 import jwt
@@ -10,8 +11,8 @@ PORT = 5000
 
 
 USERS = {
-    "jane_doe": "password123",
-    "admin": "admin123"
+    "jane_doe": bcrypt.hashpw("password123".encode(), bcrypt.gensalt()),
+    "admin": bcrypt.hashpw("admin123".encode(), bcrypt.gensalt())
 }
 
 
@@ -68,7 +69,7 @@ def handle_client(client_socket, address):
                 
                 print(f"[AUTH] Përpjekje për login nga {username}")
                 
-                if username in USERS and USERS[username] == password:
+                if username in USERS and bcrypt.checkpw(password.encode(), USERS[username]):
                     token = generate_jwt(username)
                     response = {
                         "status": "ok",
