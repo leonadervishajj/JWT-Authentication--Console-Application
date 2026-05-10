@@ -41,7 +41,12 @@ def verify_jwt(token):
     try:
         payload = jwt.decode(token, PUBLIC_KEY, algorithms=["RS256"])
         return payload
-    except:
+    except jwt.ExpiredSignatureError:
+        print("[JWT] Token i skaduar")
+        return None
+
+    except jwt.InvalidTokenError:
+        print("[JWT] Token i pavlefshëm")
         return None
     
 def handle_client(client_socket, address):
