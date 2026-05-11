@@ -1,28 +1,53 @@
 # JWT-Authentication--Console-Application
 
-# JWT Authentication Console Application
+***Përshkrimi i Projektit**
 
-## Përshkrimi
-Ky është një sistem autentikimi JWT (JSON Web Token) me arkitekturë client-server duke përdorur socket komunikim. Serveri autentikon kredencialet e dërguara nga klienti dhe, pas autentikimit të suksesshëm, lëshon një JWT për qasje në burimet e mbrojtura.
+Ky projekt implementon një sistem autentikimi dhe autorizimi duke përdorur JWT (JSON Web Token) në një arkitekturë Client-Server me Java.
 
-## Teknologjitë
-- Python 3.x
-- Socket për komunikim client-server
-- JWT me RSA (algoritmi asimetrik RS256)
-- PyJWT për manipulimin e JWT
-- Cryptography për gjenerimin e çelësave RSA
+Sistemi përbëhet nga dy aplikacione console:
+
+Serveri – autentikon përdoruesit, gjeneron JWT token dhe kontrollon autorizimin.
+Klienti – lidhet me serverin, dërgon kredencialet dhe përdor JWT token për të aksesuar resurset e mbrojtura.
+
+Komunikimi ndërmjet client-it dhe serverit realizohet përmes Java Sockets (ServerSocket dhe Socket).
+
+***Objektivat e Projektit**
+
+Qëllimi kryesor i këtij projekti është:
+
+- Të kuptohet funksionimi i JWT authentication.
+- Të implementohet komunikimi Client-Server.
+- Të realizohet autentikimi dhe autorizimi me token.
+- Të implementohen protected endpoints.
+- Të praktikohet programimi me Java sockets.
+- Të kuptohet rëndësia e sigurisë në aplikacionet moderne.
+
+***Arkitektura e Projektit**
+
+***Flow i sistemit:***
+   - Client lidhet me serverin.
+   - Client dërgon username dhe password.
+   - Serveri verifikon kredencialet.
+   - Nëse login është valid:
+   - serveri gjeneron JWT token.
+   - Client ruan tokenin.
+   - Për çdo protected request:
+   - client dërgon JWT token.
+   -  Serveri validon tokenin.
+   - Nëse tokeni është valid:
+   - serveri lejon qasjen në protected resource.
 
 ## Struktura e Projektit
 JWT-Authentication-Console-Application/
--  server.py # Serveri që pret lidhjet
--  client.py # Klienti për autentikim
--  generate_keys.py # Gjeneron çelësat RSA
--  requirements.txt # Varësitë e projektit
--  README.md # Dokumentacioni
--  .gitignore # File-t që injorohen nga Git
--  keys/ # Folderi i çelësave (gjenerohet automatikisht)
--  private.pem # Çelësi privat (vetëm serveri)
--  public.pem # Çelësi publik (për verifikim)
+-  server.py ***Serveri që pret lidhjet***
+-  client.py ***Klienti për autentikim***
+-  generate_keys.py ***Gjeneron çelësat RSA***
+-  requirements.txt ***Varësitë e projektit***
+-  README.md ***Dokumentacioni***
+-  .gitignore ***File-t që injorohen nga Git***
+-  keys/ ***Folderi i çelësave (gjenerohet automatikisht)***
+-  private.pem ***Çelësi privat (vetëm serveri)***
+-  public.pem ***Çelësi publik (për verifikim)***
 
 
 ## Instalimi
