@@ -49,6 +49,153 @@ JWT-Authentication-Console-Application/
 -  private.pem ***Çelësi privat (vetëm serveri)***
 -  public.pem ***Çelësi publik (për verifikim)***
 
+***Shpjegimi i Klasave**
+-  **server.py***
+Kjo file përfaqëson serverin kryesor të aplikacionit.
+
+
+***Funksionalitetet Kryesore***
+- Krijon socket server duke përdorur:
+***socket.socket()**
+- Pret lidhje nga klientët.
+- Menaxhon komunikimin Client-Server.
+- Verifikon kredencialet e përdoruesit.
+- Gjeneron JWT token pas login-it të suksesshëm.
+- Validon JWT token për protected requests.
+- Kthen përgjigje për klientin.
+- Përgjegjësitë
+- Authentication flow
+- Authorization flow
+- JWT validation
+- Socket communication
+- Error handling
+
+**client.py***
+
+Kjo file përfaqëson client application.
+
+***Funksionalitetet Kryesore***
+- Lidhet me serverin.
+- Merr username dhe password nga përdoruesi.
+- Dërgon login request.
+- Merr JWT token nga serveri.
+- Ruaj tokenin në memory.
+- Dërgon protected requests.
+- Menaxhon logout.
+- Komandat e Disponueshme
+***request_data**
+***logout**
+- Përgjegjësitë
+- Client connection
+- Request handling
+- JWT storage
+- User interaction
+
+
+**generate_keys.py***
+
+Kjo file përdoret për gjenerimin e RSA keys.
+
+***Funksionalitetet Kryesore***
+Gjeneron:
+    private key
+    public key
+    Ruaj çelësat në:
+    private.pem
+    public.pem
+    Përgjegjësitë
+    RSA key generation
+    Security setup
+
+**private.pem***
+
+Kjo file përmban RSA private key.
+
+***Përdorimi***
+- përdoret nga serveri për:
+- JWT signing
+- token generation
+- Security
+
+Private key:
+1. nuk duhet të ndahet publikisht
+2. përdoret vetëm nga serveri
+
+
+**public.pem***
+
+Kjo file përmban RSA public key.
+
+***Përdorimi***
+Përdoret për:
+- JWT verification
+- token validation
+- Security
+
+Public key:
+mund të ndahet me klientët
+nuk mund të përdoret për signing
+requirements.txt
+
+Kjo file përmban dependencies e projektit.
+
+
+Instalimi realizohet me:
+***pip install -r requirements.txt***
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- ***ClientHandler.java***
+
+Kjo klasë menaxhon komunikimin me një klient specifik.
+
+***Funksionet Kryesore***
+- Lexon username/password.
+- Verifikon login.
+- Gjeneron JWT token.
+- Validon tokenin.
+- Menaxhon komandat:
+- request_data
+- logout
+- Përgjegjësitë
+- Authentication flow.
+- Authorization flow.
+- Error handling.
+
+- ***JwtService.java***
+
+Kjo klasë menaxhon krijimin dhe validimin e JWT tokenëve.
+
+***Funksionet Kryesore***
+- generateToken()
+- Gjeneron JWT token duke përfshirë:
+- username
+- issued time (iat)
+- expiration time (exp)
+- validateToken()
+
+***Kontrollon:***
+- validitetin e tokenit
+- expiration
+- signature
+- Përgjegjësitë
+- Security logic.
+- Token handling.
 
 ## Instalimi
 
