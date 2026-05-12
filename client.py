@@ -35,3 +35,36 @@ class JWTClient:
         """Mbylle lidhjen me serverin"""
         if self.socket:
             self.socket.close()
+
+def get_protected_data(self):
+        """Merr te dhena te mbrojtura nga serveri"""
+        if not self.token:
+            print("\n[GABIM] Nuk jeni te autentikuar! Ju lutem logohuni fillimisht.")
+            return None
+       
+        request = {
+            "action": "get_data",
+            "token": self.token
+        }
+       
+        response = self.send_request(request)
+       
+        if response and response.get("status") == "ok":
+            data = response.get("data")
+            print("\n" + "=" * 50)
+            print("TE DHENAT E MBROJTURA:")
+            print(f"  Message: {data.get('message')}")
+            print(f"  Secret: {data.get('secret')}")
+            print(f"  User: {data.get('user')}")
+            print(f"  Timestamp: {data.get('timestamp')}")
+            print("=" * 50)
+            return data
+        else:
+            print(f"\n[GABIM] {response.get('message') if response else 'Gabim i panjohur'}")
+            return None
+   
+            def logout(self):
+             """Shkyqet dhe fshin token-in"""
+        self.token = None
+        self.authenticated = False
+        print("\n[LOGOUT] Jeni shkyqur me sukses!")
