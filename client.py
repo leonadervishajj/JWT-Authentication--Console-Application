@@ -44,7 +44,7 @@ class JWTClient:
             self.token = response.get("token")
             self.authenticated = True
             print(f"\n[SUKSES] {response.get('message')}")
-            print(f"[TOKEN] {self.token[:50]}...")
+            print(f"[TOKEN] {self.token}")
             return True
         else:
             print(f"\n[GABIM] {response.get('message') if response else 'Gabim i panjohur'}")
