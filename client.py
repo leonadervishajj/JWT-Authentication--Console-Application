@@ -87,3 +87,64 @@ class JWTClient:
         self.token = None
         self.authenticated = False
         print("\n[LOGOUT] Jeni shkyqur me sukses!")
+
+
+def print_banner():
+    print("=" * 50)
+    print("KLIENTI JWT AUTHENTICATION")
+    print("=" * 50)
+
+
+def main():
+    client = JWTClient()
+
+    print_banner()
+
+    print("\nDuke u lidhur me serverin...")
+    if not client.connect():
+        print("Nuk mund te vazhdohet pa lidhje me serverin.")
+        return
+
+    print("Lidhur me serverin!")
+
+    while True:
+        if not client.authenticated:
+            print("\n" + "-" * 40)
+            print("MENUJA E AUTENTIKIMIT")
+            print("-" * 40)
+
+            username = input("Username: ")
+            password = getpass.getpass("Password: ")
+
+            if client.login(username, password):
+                print("\nAutentikim i suksesshem! Tani mund te aksesoni te dhenat e mbrojtura.")
+            else:
+                print("\nProvoni perseri.")
+                continue
+
+        print("\n" + "-" * 40)
+        print("KOMANDAT E DISPONUESHME")
+        print("-" * 40)
+        print("   1  ->  get_data  - Merr te dhenat e mbrojtura")
+        print("   2  ->  logout    - Shkycu")
+        print("   3  ->  exit      - Dil nga aplikacioni")
+        print("-" * 40)
+
+        command = input("\nZgjedhja: ").strip().lower()
+
+        if command == "1" or command == "get_data":
+            client.get_protected_data()
+        elif command == "2" or command == "logout":
+            client.logout()
+        elif command == "3" or command == "exit":
+            print("\nDuke u mbyllur... Faleminderit!")
+            break
+        else:
+            print("\nKomande e panjohur!")
+
+    client.close()
+
+
+if __name__ == "__main__":
+    main()
+
